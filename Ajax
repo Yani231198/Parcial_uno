@@ -1,0 +1,41 @@
+//GUARDAMOS LA INSCRIPCION
+$("#enviar").off("click");
+$("#enviar").on("click", function(e) {
+    $('enviar').attr("disabled", true);
+    var Codigo = $("#Codigo").val();
+    var Nombres = $("#Nombres").val();
+    var Apellidos = $("#Apellidos").val();
+    var Dui = $("#Dui").val();
+    var Direccion = $("#Direccion").val();
+    var Telefono = $("#Telefono").val();
+    var Email = $("#Email").val();
+   
+    parametros = {
+        'Codigo': Codigo,
+        'Nombres': Nombres,
+        'Apellidos': Apellidos,
+        'Dui': Dui,
+        'Direccion': Direccion,
+        'Telefono': Telefono,
+        'Email': Email,
+    };
+    $.ajax({
+        type: "POST",
+        url: "Recibe_clientes2.php",
+        data: parametros,
+        beforeSend: function(objeto) {
+            $("#Msg").html('Cargando...');
+        },
+        success: function(datos) {
+            $("#Msg").html(datos);
+            $('#Codigo').attr("disabled", false);
+            $('#Nombres').val(''),
+            $('#Apellidos').val(''),
+            $('#Dui').val(''),
+            $('#Direccion').val(''),
+            $('#Telefono').val('')
+            $('#Email').val('')
+        }
+    });
+    event.preventDefault();
+});
